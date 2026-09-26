@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI for Dummies (Mom's Words)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #111111;
+    --orange: #F15A24;
+    --cream: #FBF6EC;
+    --gray: #555555;
+    --white: #ffffff;
+  }
+  @page { size: Letter; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #ddd; }
+  body {
+    font-family: "Futura", "Poppins", "Helvetica Neue", Arial, sans-serif;
+    color: var(--black);
+    font-size: 11.25pt;
+    line-height: 1.42;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .page {
+    width: 8.5in;
+    height: 11in;
+    margin: 0.25in auto;
+    background: var(--white);
+    position: relative;
+    overflow: hidden;
+    padding: 0.5in 0.65in 0.95in 0.65in;
+    page-break-after: always;
+    break-after: page;
+  }
+  .page:last-child { page-break-after: auto; break-after: auto; }
+  @media print {
+    html, body { background: var(--white); }
+    .page { margin: 0; }
+  }
+
+  /* running header */
+  .runner {
+    display: flex; justify-content: space-between; align-items: center;
+    font-weight: 700; font-size: 8.5pt; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gray); border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 18px;
+  }
+  .runner b { color: var(--orange); }
+
+  /* chapter heading */
+  .chap {
+    display: flex; align-items: stretch; margin-bottom: 14px;
+  }
+  .chap .num {
+    background: var(--orange); color: var(--white);
+    font-weight: 800; font-size: 24pt; line-height: 1;
+    padding: 10px 15px; display: flex; align-items: center;
+  }
+  .chap .title {
+    background: var(--black); color: var(--white); flex: 1;
+    font-weight: 800; font-size: 20pt; line-height: 1.1; text-transform: uppercase;
+    padding: 10px 15px; display: flex; align-items: center;
+  }
+  h3 {
+    font-weight: 800; font-size: 12.5pt; text-transform: uppercase; letter-spacing: 0.02em;
+    margin: 13px 0 6px 0; padding-bottom: 2px; border-bottom: 2.5pt solid var(--black);
+  }
+  p { margin: 0 0 7px 0; }
+  .lede { font-size: 12.75pt; line-height: 1.4; }
+  em { font-style: italic; }
+  strong { font-weight: 700; }
+  ul, ol { margin: 0 0 9px 0; padding-left: 1.3em; }
+  li { margin-bottom: 3px; }
+
+  /* callout box */
+  .box {
+    background: var(--cream); border-left: 7px solid var(--orange);
+    padding: 9px 14px; margin: 10px 0;
+  }
+  .box .label {
+    font-weight: 800; font-size: 9.5pt; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--orange); margin-bottom: 3px;
+  }
+  .box p:last-child { margin-bottom: 0; }
+  .box.dark { background: var(--black); color: var(--white); border-left-color: var(--orange); }
+
+  /* tables */
+  table { width: 100%; border-collapse: collapse; margin: 6px 0 10px 0; font-size: 10.5pt; line-height: 1.32; }
+  th {
+    background: var(--black); color: var(--white); text-align: left;
+    font-weight: 700; text-transform: uppercase; font-size: 9.5pt; letter-spacing: 0.08em;
+    padding: 6px 8px;
+  }
+  td { padding: 5px 8px; vertical-align: top; }
+  tbody tr:nth-child(even) td { background: var(--cream); }
+  tbody tr:last-child td { border-bottom: 2.5pt solid var(--black); }
+  td.yr { font-weight: 800; color: var(--orange); white-space: nowrap; width: 1%; }
+  td.k { font-weight: 700; width: 30%; }
+
+  /* two columns */
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+
+  /* glossary */
+  .gloss { column-count: 2; column-gap: 26px; font-size: 9.7pt; line-height: 1.3; }
+  .gloss div { break-inside: avoid; margin-bottom: 6px; }
+  .gloss b { display: block; font-weight: 800; text-transform: uppercase; font-size: 10pt; letter-spacing: 0.03em; }
+
+  /* footer badge */
+  .foot {
+    position: absolute; left: 0.65in; right: 0.65in; bottom: 0.4in;
+    background: var(--black); color: var(--white);
+    display: flex; justify-content: space-between; align-items: center;
+    font-weight: 700; font-size: 8.5pt; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 8px 14px;
+  }
+  .foot .pg { background: var(--orange); padding: 2px 9px; }
+
+  /* cover */
+  .cover { padding-top: 0.55in; }
+  .mast { background: var(--black); color: var(--white); padding: 30px 30px 24px 30px; }
+  .mast .kicker { font-weight: 700; font-size: 10pt; letter-spacing: 0.22em; color: var(--orange); text-transform: uppercase; }
+  .mast h1 { font-weight: 800; font-size: 52pt; line-height: 0.98; margin: 8px 0 0 0; text-transform: uppercase; }
+  .mast h1 .star { color: var(--orange); }
+  .subbar { background: var(--orange); color: var(--white); font-weight: 700; font-size: 13pt; padding: 10px 30px; }
+  .footnote { font-style: italic; color: var(--gray); font-size: 11.5pt; margin-top: 8px; }
+  .byline { margin-top: 22px; font-weight: 700; font-size: 11pt; letter-spacing: 0.08em; text-transform: uppercase; }
+  .byline span { color: var(--gray); font-weight: 400; text-transform: none; letter-spacing: 0; }
+  .toc { margin-top: 12px; }
+  .toc table { font-size: 11pt; }
+  .toc td.n { font-weight: 800; color: var(--orange); width: 1%; white-space: nowrap; }
+  .toc td.p { text-align: right; color: var(--gray); width: 1%; }
+  .flow { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0 12px 0; }
+  .flow span { background: var(--black); color: var(--white); font-weight: 700; font-size: 10.5pt; text-transform: uppercase; letter-spacing: 0.06em; padding: 6px 12px; }
+  .flow span.o { background: var(--orange); }
+  .sign { font-weight: 700; font-size: 13pt; margin-top: 10px; }
+</style>
+</head>
+<body>
+
+<!-- ============ PAGE 1: COVER ============ -->
+<section class="page cover">
+  <div class="mast">
+    <div class="kicker">A short book for Mom &amp; Dad</div>
+    <h1>AI for<br>Dummies<span class="star">*</span></h1>
+  </div>
+  <div class="subbar">Artificial intelligence, chatbots and agents, explained over one cup of coffee</div>
+  <p class="footnote">*Mom's words. I would never. I was raised better than that, and I know exactly who raised me.</p>
+
+  <p class="lede" style="margin-top:18px">You asked a good question: when you read an article about AI, what do all those words actually mean? This little book is my answer. It covers where AI came from, how ChatGPT and its cousins work, what an "agent" is, and a cheat sheet for the jargon. There's also one chapter on scams, which is the part I'd most like you to read twice.</p>
+  <p>No math. No quiz. Read one chapter at a time with coffee, and call me when something doesn't make sense. Calling me is part of the design. Half the people writing those articles don't understand it either.</p>
+
+  <div class="toc">
+    <table>
+      <thead><tr><th colspan="3">What's inside</th></tr></thead>
+      <tbody>
+        <tr><td class="n">1</td><td>You already use AI (and didn't notice)</td><td class="p">2</td></tr>
+        <tr><td class="n">2</td><td>Where it came from: 75 years in one page</td><td class="p">3</td></tr>
+        <tr><td class="n">3</td><td>How ChatGPT works: autocomplete with a library card</td><td class="p">4</td></tr>
+        <tr><td class="n">4</td><td>What it's great at, and where it makes things up</td><td class="p">5</td></tr>
+        <tr><td class="n">5</td><td>Who's who, and why it's in the news every day</td><td class="p">6</td></tr>
+        <tr><td class="n">6</td><td>Agents: when the AI stops talking and starts doing</td><td class="p">7</td></tr>
+        <tr><td class="n">7</td><td>The cheat sheet: words you'll see in articles</td><td class="p">8</td></tr>
+        <tr><td class="n">8</td><td>The scam chapter (please read this one twice)</td><td class="p">9</td></tr>
+        <tr><td class="n">9</td><td>Try it tonight, and how to read an AI headline</td><td class="p">10</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="byline">From Porter <span>&middot; written with help from Claude, an AI. Yes, that's the point. Chapter 4 explains why I still checked its homework.</span></p>
+
+  <div class="foot"><span>Batteries not included. Son included.</span><span class="pg">1</span></div>
+</section>
+
+<!-- ============ PAGE 2: CHAPTER 1 ============ -->
+<section class="page">
+  <div class="runner"><span>AI for Dummies<b>*</b></span><span>Chapter 1</span></div>
+  <div class="chap"><div class="num">1</div><div class="title">You already use AI</div></div>
+
+  <p class="lede">Here's the first secret: you've been using artificial intelligence for years. Nobody announced it. It just showed up inside things you already own.</p>
+
+  <ul>
+    <li><strong>Your iPhone unlocking when it sees your face.</strong> That's AI recognizing you, glasses or no glasses, bad hair day or not.</li>
+    <li><strong>Typing "dog" into the Photos app</strong> and getting every picture of the dog. Nobody labeled those. The phone figured it out.</li>
+    <li><strong>Autocorrect</strong> guessing the word you meant. (And sometimes the word you absolutely did not mean.)</li>
+    <li><strong>Your email's spam folder</strong>, quietly catching the Nigerian princes.</li>
+    <li><strong>Siri</strong>, the map app rerouting you around traffic, and Netflix deciding you'd enjoy another British murder mystery. Correctly, I assume.</li>
+  </ul>
+
+  <h3>So what is AI, really?</h3>
+  <p>Here's the simplest definition I know: <strong>AI is a computer doing something that used to require a person's judgment.</strong> Recognizing a face. Understanding a sentence. Deciding if an email is junk.</p>
+  <p>The interesting part is <em>how</em> it learns to do that. Old-fashioned software follows rules a programmer wrote down, step by step, like a recipe card. AI learns from examples instead.</p>
+
+  <div class="box">
+    <div class="label">The grandkid test</div>
+    <p>How did you teach your kids what a dog is? You didn't hand them a rulebook. "Four legs, fur, a tail" also describes the cat, and the cat would be offended. You just pointed at dogs. Lots of dogs. Eventually they got it, and they could spot a dog they'd never seen before.</p>
+    <p>That's <strong>machine learning</strong>, the engine under almost all modern AI. Show a computer a million examples, let it find the pattern on its own. Nobody writes the rules. The computer works them out.</p>
+  </div>
+
+  <p>Everything in the rest of this book, ChatGPT included, is that same idea scaled up to an almost silly size. The computer didn't look at a million dog pictures. It read a meaningful fraction of everything humans have ever written down.</p>
+
+  <div class="foot"><span>No dogs were confused in the making of this page</span><span class="pg">2</span></div>
+</section>
+
+<!-- ============ PAGE 3: CHAPTER 2 ============ -->
+<section class="page">
+  <div class="runner"><span>AI for Dummies<b>*</b></span><span>Chapter 2</span></div>
+  <div class="chap"><div class="num">2</div><div class="title">Where it came from</div></div>
+
+  <p>AI feels like it arrived in 2022. It actually has a 75-year backstory, with a couple of long naps in the middle.</p>
+
+  <table>
+    <thead><tr><th>When</th><th>What happened</th></tr></thead>
+    <tbody>
+      <tr><td class="yr">1950</td><td>Alan Turing, the British codebreaker, asks "Can machines think?" His test: if you can't tell whether you're chatting with a person or a machine, call it thinking.</td></tr>
+      <tr><td class="yr">1956</td><td>A summer workshop at Dartmouth, in Hanover, New Hampshire, coins the phrase "artificial intelligence." The organizers figured one summer would get them most of the way. It did not.</td></tr>
+      <tr><td class="yr">1966</td><td>ELIZA, a simple MIT program, plays therapist by repeating your words back as questions. People confide in it anyway. Its creator's secretary asked him to leave the room so she could talk to it in private.</td></tr>
+      <tr><td class="yr">1970s&ndash;80s</td><td>The "AI winters." Big promises, small results, and the research money froze. Twice.</td></tr>
+      <tr><td class="yr">1997&ndash;2011</td><td>IBM's Deep Blue beats chess champion Garry Kasparov. Later, IBM's Watson wins <em>Jeopardy!</em> Alex Trebek remains unimpressed.</td></tr>
+      <tr><td class="yr">2012</td><td>Computers get good at recognizing photos by studying over a million labeled examples on chips built for video games. The modern approach starts working.</td></tr>
+      <tr><td class="yr">2016</td><td>Google's AlphaGo beats one of the world's best players at Go, a board game with more possible positions than atoms in the universe.</td></tr>
+      <tr><td class="yr">2017</td><td>Eight Google researchers publish a paper introducing the "transformer," a better recipe for teaching computers language. It's the T in ChatGPT.</td></tr>
+      <tr><td class="yr">Nov 2022</td><td>ChatGPT goes public. It reportedly hits 100 million users in about two months, the fastest-growing app anyone had seen.</td></tr>
+      <tr><td class="yr">2023&ndash;now</td><td>Everyone piles in. Chatbots learn to see photos, listen, talk out loud, and lately, do tasks for you. Those are the "agents" in Chapter 6.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Why did it all happen now?</h3>
+  <p>The core ideas are decades old. Three ingredients finally showed up at the same time:</p>
+  <ol>
+    <li><strong>Reading material.</strong> The internet gave computers billions of pages of human writing to learn from.</li>
+    <li><strong>Horsepower.</strong> Those video game chips (mostly from a company called Nvidia) turned out to be perfect for the math.</li>
+    <li><strong>A better recipe.</strong> The 2017 transformer idea made learning from all that text practical.</li>
+  </ol>
+  <p>Like bread: people knew how to bake for centuries. What was missing was enough flour and an oven the size of a warehouse. Literally. More on the warehouses in Chapter 5.</p>
+
+  <div class="foot"><span>75 years of overnight success</span><span class="pg">3</span></div>
+</section>
+
+<!-- ============ PAGE 4: CHAPTER 3 ============ -->
+<section class="page">
+  <div class="runner"><span>AI for Dummies<b>*</b></span><span>Chapter 3</span></div>
+  <div class="chap"><div class="num">3</div><div class="title">How ChatGPT works</div></div>
+
+  <p class="lede">Finish this sentence: "Peanut butter and ____." You said jelly. You didn't look it up. You've just seen those words together a thousand times.</p>
+
+  <p>That, believe it or not, is the heart of ChatGPT. It is a machine that is extraordinarily good at <strong>guessing the next word.</strong> Your iPhone does a tiny version when it suggests the next word above the keyboard. ChatGPT is that trick after reading a library the size of a country.</p>
+
+  <h3>School: how it learns</h3>
+  <p>First, the AI goes through "training." Picture the biggest fill-in-the-blank quiz in history. The computer reads a sentence from its pile of books and websites, hides the next word, guesses, and checks the answer. When it's wrong, it adjusts itself a tiny bit. Then it does that again. Trillions of times, for months, on warehouses full of computers.</p>
+  <p>The "adjusting" happens on what engineers call <strong>parameters</strong>. Picture a sound mixing board with hundreds of billions of little knobs. Every wrong guess nudges some knobs. When training is done, the knobs are locked, and that knob setting <em>is</em> the AI. When you ask it something, it writes a fresh answer one word at a time, which is why the same question can get a slightly different answer twice.</p>
+
+  <div class="box">
+    <div class="label">The surprising part</div>
+    <p>To guess the next word in a chemistry textbook, it helps to pick up some chemistry. To guess the next line of a French novel, it helps to learn French. Nobody programmed grammar, facts or sonnets into ChatGPT. They soaked in as a side effect of getting very good at the guessing game, which surprised even the people who built it.</p>
+  </div>
+
+  <h3>Finishing school: learning manners</h3>
+  <p>Having read the whole internet, it has also read the worst of it. So in a second round, real people grade its answers for helpfulness, politeness and safety. It learns to act like an assistant, refuse dangerous requests, and admit when it doesn't know. (In theory. See Chapter 4.)</p>
+
+
+  <div class="box dark">
+    <div class="label">Decoding the letters</div>
+    <p><strong>LLM</strong> = Large Language Model. <em>Large</em> because it's enormous. <em>Language</em> because it works with words. <em>Model</em> means the finished product.</p>
+    <p><strong>GPT</strong> = Generative Pre-trained Transformer. It <em>generates</em> writing, it was <em>trained in advance</em>, and it runs on the 2017 <em>transformer</em> recipe. Engineers should never name things.</p>
+  </div>
+
+  <div class="foot"><span>Peanut butter and jelly. Every time.</span><span class="pg">4</span></div>
+</section>
+
+<!-- ============ PAGE 5: CHAPTER 4 ============ -->
+<section class="page">
+  <div class="runner"><span>AI for Dummies<b>*</b></span><span>Chapter 4</span></div>
+  <div class="chap"><div class="num">4</div><div class="title">Great at, and makes stuff up</div></div>
+
+  <table>
+    <thead><tr><th style="width:50%">Where it shines</th><th>Where to be careful</th></tr></thead>
+    <tbody>
+      <tr><td>Explaining a confusing topic in plain English, and again simpler if you ask</td><td>Medical, legal and money questions. Great for preparing questions for your doctor. Not a doctor.</td></tr>
+      <tr><td>Drafting a letter, a toast, a thank-you note or a complaint to the cable company</td><td>Recent news. It may not know about this week unless it searches the web.</td></tr>
+      <tr><td>Summarizing a long article or a dense document</td><td>Exact facts: dates, quotes, phone numbers, book titles, citations</td></tr>
+      <tr><td>"What can I cook with what's in the fridge?"</td><td>Math with lots of steps. Better than it used to be. Still check the tip.</td></tr>
+      <tr><td>Translating a menu, a sign or a letter from a foreign country</td><td>Anything private. Don't type in Social Security numbers, passwords or bank details.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>The big one: "hallucination"</h3>
+  <p>You'll see this word in every article about AI. It means <strong>the AI stated something false with total confidence.</strong> It might invent a book, author and publisher included, that does not exist.</p>
+  <p>Why does that happen? Remember Chapter 3: the machine is built to produce the most <em>likely-sounding</em> next word. Usually likely-sounding and true are the same thing. Sometimes they aren't, and the machine can't always tell the difference. It isn't lying. It has no idea it's wrong.</p>
+
+  <div class="box">
+    <div class="label">The best way to think about it</div>
+    <p>Treat it like a brilliant, well-read houseguest who has never once in their life said "I don't know." Fascinating at dinner. Wonderful for ideas. You would still double-check before you let them do your taxes.</p>
+  </div>
+
+  <h3>Four rules of thumb</h3>
+  <ol>
+    <li><strong>If it matters, verify it.</strong> Health, money and legal things get checked with a real person or a real source.</li>
+    <li><strong>Ask "where did you get that?"</strong> Then check that the source actually exists.</li>
+    <li><strong>Push back.</strong> "Are you sure?" often gets a more careful answer. It won't sulk.</li>
+    <li><strong>Be specific.</strong> "Write a birthday note" gets you a greeting card. "A funny, warm note for my sister who just turned 70 and loves gardening" gets you something worth sending.</li>
+  </ol>
+
+  <p>For the record, I checked every fact in this booklet. The AI's first draft was pretty good. "Pretty good" is why you check.</p>
+
+  <div class="foot"><span>Confidence is not a fact</span><span class="pg">5</span></div>
+</section>
+
+<!-- ============ PAGE 6: CHAPTER 5 ============ -->
+<section class="page">
+  <div class="runner"><span>AI for Dummies<b>*</b></span><span>Chapter 5</span></div>
+  <div class="chap"><div class="num">5</div><div class="title">Who's who</div></div>
+
+  <p>Articles toss these names around like you're supposed to know them. Here's the program.</p>
+
+  <table>
+    <thead><tr><th>Company</th><th>Their AI</th><th>You'd know them from</th></tr></thead>
+    <tbody>
+      <tr><td class="k">OpenAI</td><td>ChatGPT</td><td>The one that started the stampede in 2022</td></tr>
+      <tr><td class="k">Anthropic</td><td>Claude</td><td>The one that helped write this booklet</td></tr>
+      <tr><td class="k">Google</td><td>Gemini</td><td>Google search, YouTube, Gmail</td></tr>
+      <tr><td class="k">Microsoft</td><td>Copilot</td><td>Windows, Word, Outlook</td></tr>
+      <tr><td class="k">Apple</td><td>Apple Intelligence and Siri</td><td>Your iPhone</td></tr>
+      <tr><td class="k">Meta</td><td>Meta AI (built on "Llama")</td><td>Facebook, Instagram, WhatsApp</td></tr>
+      <tr><td class="k">xAI</td><td>Grok</td><td>Elon Musk, and X (formerly Twitter)</td></tr>
+      <tr><td class="k">Nvidia</td><td>Doesn't make a chatbot</td><td>Makes the chips everyone else needs. In a gold rush, sell shovels.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>"Open" versus "closed"</h3>
+  <p>This trips up everyone, so don't feel bad. <strong>OpenAI is just a company name.</strong> Ironically, its best AI is closed: you can use it, but you can't take it home. Anthropic and Google work the same way.</p>
+  <p>Other companies give their AI away for anyone to download and run on their own computers. That's called <strong>open source</strong> or <strong>open weights</strong>. Meta's Llama, DeepSeek from China and Mistral from France are the names you'll see.</p>
+  <div class="box">
+    <div class="label">Think of it like restaurants</div>
+    <p>A closed AI is a restaurant: you order, the food comes out, the kitchen stays private. An open AI is a published recipe: anyone can cook it at home, tweak it, or open a competing restaurant. Both have fans, and the argument fills a lot of articles.</p>
+  </div>
+
+  <h3>Why is it in the news every single day?</h3>
+  <p>Money. The big tech companies are spending hundreds of billions of dollars on "data centers," which are warehouses packed with those Nvidia chips, plus the power plants to run them. Nvidia became the most valuable company in the world selling those chips.</p>
+  <p>Is it a bubble? Probably partly. The railroads were a bubble too, and we still got the railroads. Expect headlines about both the bubble and the railroads for years.</p>
+
+  <div class="foot"><span>Programs sold here. Scorecards extra.</span><span class="pg">6</span></div>
+</section>
+
+<!-- ============ PAGE 7: CHAPTER 6 ============ -->
+<section class="page">
+  <div class="runner"><span>AI for Dummies<b>*</b></span><span>Chapter 6</span></div>
+  <div class="chap"><div class="num">6</div><div class="title">Agents: AI that does things</div></div>
+
+  <p class="lede">A <strong>chatbot talks</strong>. An <strong>agent does</strong>. That's the whole difference, and it's why every article in 2026 has the word "agent" in it.</p>
+
+  <p>Ask a chatbot how to book a flight and it lists the steps. Ask an agent and it opens the airline website, compares fares and fills in the forms. One friend gives you directions to the airport. The other drives you there. In your car. With your credit card.</p>
+
+  <h3>How an agent works</h3>
+  <p>An agent is the same kind of AI from Chapter 3, running in a loop and given some "tools," which are its hands: a web browser, your email, your calendar, a shopping site. It goes around and around:</p>
+  <div class="flow"><span class="o">Look</span><span>Decide</span><span class="o">Act</span><span>Check the result</span><span class="o">Repeat</span></div>
+  <p>Say you tell one: <em>"Book a table for four at a good Italian place near our hotel, Saturday at 7."</em> It searches restaurants, reads reviews, opens the reservation page, picks the time, fills in your name, and (if it's a well-built one) stops to ask you before it hits "confirm."</p>
+
+  <div class="box dark">
+    <div class="label">When the article says "open AI agent"</div>
+    <p>It's usually one of three things:</p>
+    <p><strong>1. OpenAI's agent.</strong> The ChatGPT company launched "ChatGPT agent" in July 2025. It works inside ChatGPT and can click around websites for you.</p>
+    <p><strong>2. An open-source agent,</strong> most likely <strong>OpenClaw</strong>. It's free, people install it on their own computers, and it went viral in January 2026 as the fastest-growing project ever on GitHub (a giant library of software). It also became a security headache almost immediately. Hold that thought.</p>
+    <p style="margin-bottom:0"><strong>3. Just "agentic AI" in general,</strong> meaning any AI that takes actions on its own. "Agentic" is the favorite word of people with a slide deck.</p>
+  </div>
+
+  <h3>Why the excitement, and why the worry</h3>
+  <p>The excitement: an agent can do an afternoon of tedious online errands while you do something better. Businesses are betting on it for office work too.</p>
+  <p>The worry: an agent that can act can also make mistakes <em>at speed</em>. Give one your passwords and it's like handing an eager, brilliant teenager your wallet. Usually fine. Occasionally an expensive lesson.</p>
+  <p><strong>My take:</strong> let the rest of us be the crash-test dummies on agents for a while. The chatbot is plenty to start with.</p>
+
+  <div class="foot"><span>Keys to the car sold separately</span><span class="pg">7</span></div>
+</section>
+
+<!-- ============ PAGE 8: CHAPTER 7 GLOSSARY ============ -->
+<section class="page">
+  <div class="runner"><span>AI for Dummies<b>*</b></span><span>Chapter 7</span></div>
+  <div class="chap"><div class="num">7</div><div class="title">The cheat sheet</div></div>
+  <p style="font-size:10.5pt">Keep this page near the newspaper. Alphabetical, plain English, zero shame.</p>
+
+  <div class="gloss">
+    <div><b>AGI</b>"Artificial General Intelligence." An AI as capable as a person at almost everything. Doesn't exist yet. Always "a few years away," according to people raising money.</div>
+    <div><b>Agent / agentic</b>An AI that goes beyond answering and takes actions for you. See Chapter 6.</div>
+    <div><b>AI slop</b>Cheap, mass-produced AI junk: fake photos, bland articles, weird videos clogging up Facebook.</div>
+    <div><b>Algorithm</b>A set of steps a computer follows. The "algorithm" deciding your Facebook feed is just the rules for what shows up first.</div>
+    <div><b>Alignment / AI safety</b>The work of making sure AI does what we actually want and refuses harmful requests.</div>
+    <div><b>Chatbot</b>An AI you talk to by typing or speaking. ChatGPT, Claude, Gemini.</div>
+    <div><b>Context window</b>How much the AI can keep in mind at once in one conversation. Its short-term memory.</div>
+    <div><b>Data center</b>A warehouse full of computers. The AI "lives" there, not on your phone.</div>
+    <div><b>Deepfake</b>A fake video, photo or voice made by AI to look and sound like a real person.</div>
+    <div><b>Fine-tuning</b>Extra training to specialize an AI, like a doctor doing a residency after medical school.</div>
+    <div><b>Generative AI</b>AI that creates new things: writing, pictures, music, video. ChatGPT is generative AI.</div>
+    <div><b>GPT</b>Generative Pre-trained Transformer. The engine inside ChatGPT. See Chapter 3.</div>
+    <div><b>GPU / compute</b>GPUs are the chips that power AI. "Compute" is how much of that computing power you have.</div>
+    <div><b>Hallucination</b>When the AI confidently states something false. See Chapter 4.</div>
+    <div><b>LLM</b>Large Language Model. The type of AI behind every chatbot.</div>
+    <div><b>Machine learning</b>Teaching computers with examples instead of rules. The grandkid-and-dog idea from Chapter 1.</div>
+    <div><b>Model</b>A finished AI, ready to use. "GPT-5" and "Claude" are names of models.</div>
+    <div><b>Multimodal</b>An AI that handles more than text: it can look at a photo, listen, or speak.</div>
+    <div><b>Neural network</b>The design most AI uses, loosely inspired by how brain cells connect. Loosely.</div>
+    <div><b>Open source / open weights</b>An AI you can download and run yourself. The published recipe. See Chapter 5.</div>
+    <div><b>Parameters</b>The knobs inside the AI that get adjusted during training. Hundreds of billions of them.</div>
+    <div><b>Prompt</b>Whatever you type or say to the AI. "Prompt engineering" is a fancy name for asking well.</div>
+    <div><b>Reasoning model</b>An AI that "thinks it over" step by step before answering. Slower, better on hard problems.</div>
+    <div><b>Tokens</b>The chunks of words the AI reads and writes. Roughly three-quarters of a word each. Companies charge by the token.</div>
+    <div><b>Training</b>The long, expensive schooling where the AI learns from its giant pile of reading.</div>
+    <div><b>Transformer</b>The 2017 Google invention that made modern chatbots possible. Not the robot toys.</div>
+  </div>
+
+  <div class="foot"><span>Now you know more than most panelists</span><span class="pg">8</span></div>
+</section>
+
+<!-- ============ PAGE 9: CHAPTER 8 SCAMS ============ -->
+<section class="page">
+  <div class="runner"><span>AI for Dummies<b>*</b></span><span>Chapter 8</span></div>
+  <div class="chap"><div class="num">8</div><div class="title">The scam chapter</div></div>
+
+  <p class="lede">This is the chapter I actually worry about. Robots taking over is a movie. Crooks with a new toy is a Tuesday.</p>
+
+  <h3>Fake voices on the phone</h3>
+  <p>AI can now copy someone's voice from just a few seconds of audio, like a video posted online. Scammers use it for the old "grandparent scam" with a terrifying upgrade. The phone rings. It sounds <em>exactly</em> like one of the grandkids, crying. They're in trouble, they need money right now, and please don't tell Mom and Dad.</p>
+  <p>The voice will be convincing. That's the point. So don't rely on the voice. Rely on a plan.</p>
+
+  <div class="box dark">
+    <div class="label">What to do (this comes from the FTC)</div>
+    <p><strong>1. Hang up and call back</strong> on the number you already have for that person. If you can't reach them, call someone else in the family. A real emergency survives five minutes of checking.</p>
+    <p><strong>2. Use a family code word.</strong> Many families now pick one secret word that only they know. No code word on an emergency call means hang up. Pick something that has never been posted online: an inside joke works better than a pet's name.</p>
+    <p style="margin-bottom:0"><strong>3. Never send money because of a call alone.</strong> Gift cards, wire transfers, Bitcoin machines, Zelle and Venmo are the scammer's favorites because the money can't be pulled back.</p>
+  </div>
+
+  <h3>Fake videos and photos</h3>
+  <p>AI can make a video of a celebrity saying anything. In 2023, Tom Hanks had to warn his fans that a video of "him" selling a dental plan was an AI fake. If a famous person is suddenly selling you a miracle supplement, an investment or a giveaway on Facebook, assume it's fake. The real Tom Hanks is not worried about your gums.</p>
+
+  <h3>Red flags, AI or not</h3>
+  <ul>
+    <li><strong>Urgency.</strong> "Right now" and "before it's too late" are the scammer's favorite words.</li>
+    <li><strong>Secrecy.</strong> "Don't tell anyone" is never something a real family member in trouble needs.</li>
+    <li><strong>Weird ways to pay.</strong> Nobody legitimate asks for gift cards. Not the IRS, not Medicare, not your grandchild.</li>
+    <li><strong>Lookalike apps.</strong> In the App Store, check who made it. ChatGPT is made by OpenAI. Claude is made by Anthropic. Anything else with a similar name is a knockoff.</li>
+  </ul>
+
+  <p class="sign">When in doubt: hang up, call me.</p>
+
+  <div class="foot"><span>The real Tom Hanks does not want your gift cards</span><span class="pg">9</span></div>
+</section>
+
+<!-- ============ PAGE 10: CHAPTER 9 TRY IT ============ -->
+<section class="page">
+  <div class="runner"><span>AI for Dummies<b>*</b></span><span>Chapter 9</span></div>
+  <div class="chap"><div class="num">9</div><div class="title">Try it tonight</div></div>
+
+  <p>The best way to understand it is to poke at it for ten minutes. You can't break it, and it's free to start.</p>
+  <p><strong>Getting it on your iPhone:</strong> open the App Store and search for <strong>ChatGPT</strong> (made by OpenAI), <strong>Claude</strong> (made by Anthropic) or <strong>Gemini</strong> (made by Google). Check the maker's name before you tap "Get." Then tap the little microphone and just talk to it like a person.</p>
+
+  <h3>Five things to ask it</h3>
+  <ol>
+    <li>"Explain [something from today's paper] like I'm a smart person who hasn't been following the story."</li>
+    <li>"I have chicken, a lemon and half a bag of spinach. What can I make for dinner in 30 minutes?"</li>
+    <li>"Help me write a warm sympathy note to a friend who just lost her husband of 50 years."</li>
+    <li>"My doctor's report says [paste the confusing word]. What does that mean, and what should I ask at my next appointment?"</li>
+    <li>"Plan a relaxed three-day trip to [anywhere] for two people who don't like to rush."</li>
+  </ol>
+  <p>Then ask it about something you know cold. Watch where it bluffs.</p>
+
+  <h3>How to read an AI headline</h3>
+  <table>
+    <thead><tr><th style="width:45%">When the headline says...</th><th>Read it as...</th></tr></thead>
+    <tbody>
+      <tr><td>"AI can now do X!"</td><td>A demo did X once. Wait until regular people use it.</td></tr>
+      <tr><td>"AGI is two years away"</td><td>Said by someone raising money. It has been two years away for a while.</td></tr>
+      <tr><td>"AI will eliminate millions of jobs"</td><td>Nobody knows. Tasks change faster than jobs do.</td></tr>
+      <tr><td>"AI passes the bar exam"</td><td>Great at tests. So was your nephew. Still not your lawyer.</td></tr>
+      <tr><td>"New AI agent can run your life"</td><td>It can run some errands. Supervise it like a new driver.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box">
+    <div class="label">If you remember one thing</div>
+    <p>AI is a very well-read guesser. Brilliant, fast, and occasionally full of it. Like most of the family at Thanksgiving. Enjoy it, and check its work on anything that matters.</p>
+  </div>
+
+  <p class="sign">Love you both. Ask the robot anything, then call me to check its work.<br>Porter</p>
+
+  <div class="foot"><span>100% human-approved. Mostly.</span><span class="pg">10</span></div>
+</section>
+
+</body>
+</html>
