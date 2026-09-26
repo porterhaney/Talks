@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Niro Method">
+<title>Niro Method</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231f5f4a'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-size='18' font-weight='700' fill='white' text-anchor='middle'%3EN%3C/text%3E%3C/svg%3E">
+<style>
+:root {
+  --bg: #f6f4ef; --panel: #ffffff; --ink: #1d1d1b; --muted: #6b6860; --line: #e3dfd5;
+  --accent: #1f5f4a; --accent-ink: #ffffff; --user: #e8efe9; --warn: #9a3b1f; --code: #f1eee6;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #141513; --panel: #1c1d1a; --ink: #ecebe6; --muted: #9c9a92; --line: #2e2f2b;
+    --accent: #5fb392; --accent-ink: #0f1a15; --user: #23302a; --warn: #e08a6d; --code: #262723;
+  }
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
+  display: flex; flex-direction: column;
+}
+header {
+  display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+  padding-top: max(12px, env(safe-area-inset-top));
+  border-bottom: 1px solid var(--line); background: var(--panel);
+}
+.mark {
+  width: 34px; height: 34px; border-radius: 8px; background: var(--accent); color: var(--accent-ink);
+  display: grid; place-items: center; font: 700 19px Georgia, serif; flex: none;
+}
+.title { flex: 1; min-width: 0; }
+.title h1 { margin: 0; font-size: 17px; letter-spacing: -0.01em; }
+.title p { margin: 0; font-size: 12.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+button { font: inherit; cursor: pointer; }
+.ghost {
+  border: 1px solid var(--line); background: transparent; color: var(--ink);
+  border-radius: 8px; padding: 6px 12px; font-size: 14px;
+}
+.ghost:hover { border-color: var(--muted); }
+main { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.log { max-width: 760px; margin: 0 auto; padding: 20px 16px 8px; }
+.empty { padding: 28px 0 8px; }
+.empty h2 { font: 600 24px/1.25 Georgia, serif; margin: 0 0 8px; letter-spacing: -0.01em; }
+.empty p { color: var(--muted); margin: 0 0 18px; }
+.chips { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+.chip {
+  text-align: left; border: 1px solid var(--line); background: var(--panel); color: var(--ink);
+  border-radius: 12px; padding: 12px 14px; font-size: 14.5px; line-height: 1.4;
+}
+.chip b { display: block; font-size: 14.5px; margin-bottom: 2px; }
+.chip span { color: var(--muted); font-size: 13.5px; }
+.chip:hover { border-color: var(--accent); }
+.msg { margin: 0 0 18px; }
+.msg.user { display: flex; justify-content: flex-end; }
+.msg.user .bubble {
+  background: var(--user); border-radius: 14px 14px 4px 14px; padding: 10px 14px;
+  max-width: 85%; white-space: pre-wrap; overflow-wrap: anywhere;
+}
+.msg.assistant .bubble { overflow-wrap: anywhere; }
+.bubble > :first-child { margin-top: 0; }
+.bubble > :last-child { margin-bottom: 0; }
+.bubble h1, .bubble h2, .bubble h3 { font-size: 16px; margin: 16px 0 6px; }
+.bubble p { margin: 0 0 10px; }
+.bubble ul, .bubble ol { margin: 0 0 10px; padding-left: 22px; }
+.bubble li { margin: 2px 0; }
+.bubble code { background: var(--code); padding: 1px 5px; border-radius: 4px; font-size: 0.92em; }
+.bubble pre { background: var(--code); padding: 12px; border-radius: 8px; overflow-x: auto; font-size: 13px; }
+.bubble pre code { background: none; padding: 0; }
+.bubble table { border-collapse: collapse; display: block; overflow-x: auto; margin: 0 0 10px; font-size: 14px; }
+.bubble th, .bubble td { border: 1px solid var(--line); padding: 5px 9px; text-align: left; }
+.bubble blockquote { margin: 0 0 10px; padding-left: 12px; border-left: 3px solid var(--accent); color: var(--muted); }
+.bubble a { color: var(--accent); }
+.tools { margin-top: 6px; display: flex; gap: 8px; }
+.tools button { border: none; background: none; color: var(--muted); font-size: 13px; padding: 2px 0; }
+.tools button:hover { color: var(--ink); }
+.thinking { color: var(--muted); font-size: 14.5px; display: flex; align-items: center; gap: 8px; }
+.dots span {
+  display: inline-block; width: 6px; height: 6px; margin-right: 3px; border-radius: 50%;
+  background: var(--muted); animation: pulse 1.2s infinite ease-in-out;
+}
+.dots span:nth-child(2) { animation-delay: 0.2s; }
+.dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes pulse { 0%, 80%, 100% { opacity: 0.25; } 40% { opacity: 1; } }
+.error { color: var(--warn); font-size: 14.5px; }
+.note { color: var(--muted); font-size: 13px; font-style: italic; }
+footer {
+  border-top: 1px solid var(--line); background: var(--panel);
+  padding: 10px 16px; padding-bottom: max(10px, env(safe-area-inset-bottom));
+}
+form { max-width: 760px; margin: 0 auto; display: flex; gap: 8px; align-items: flex-end; }
+textarea {
+  flex: 1; resize: none; max-height: 40vh; min-height: 46px;
+  border: 1px solid var(--line); border-radius: 12px; padding: 11px 14px;
+  font: inherit; font-size: 16px; color: var(--ink); background: var(--bg);
+}
+textarea:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: transparent; }
+.send {
+  border: none; border-radius: 12px; min-width: 64px; height: 46px; padding: 0 16px;
+  background: var(--accent); color: var(--accent-ink); font-weight: 600;
+}
+.send:disabled { opacity: 0.45; cursor: default; }
+.fine { max-width: 760px; margin: 6px auto 0; font-size: 11.5px; color: var(--muted); text-align: center; }
+</style>
+</head>
+<body>
+<header>
+  <div class="mark" aria-hidden="true">N</div>
+  <div class="title">
+    <h1>Niro Method</h1>
+    <p>A negotiation coach built on Prof. Niro Sivanathan's published teaching</p>
+  </div>
+  <button class="ghost" id="reset" type="button">New chat</button>
+</header>
+
+<main id="scroller">
+  <div class="log" id="log"></div>
+</main>
+
+<footer>
+  <form id="form">
+    <textarea id="input" rows="1" placeholder="What are you negotiating?" autocomplete="off"></textarea>
+    <button class="send" id="send" type="submit">Send</button>
+  </form>
+  <div class="fine">
+    Not Niro himself, and not affiliated with London Business School. This is coaching, not legal advice.
+    Chats are sent to Anthropic's API to generate replies. This site doesn't store them; your browser keeps the current chat until you press New chat.
+  </div>
+</footer>
+
+<script>
+// Resolve paths against the mount point: "/niro" and "/niro/" must both mean
+// "/niro/...", so relative <script src> can't be used (it breaks without the slash).
+var BASE = (function () {
+  var p = location.pathname;
+  if (!/\/$/.test(p) && !/\.[a-z0-9]+$/i.test(p)) p += "/";
+  return p.replace(/[^\/]*$/, "");
+})();
+function loadScript(src) {
+  return new Promise(function (ok) {
+    var s = document.createElement("script");
+    s.src = BASE + src;
+    s.onload = ok;
+    s.onerror = ok; // fall back to plain text rendering
+    document.head.appendChild(s);
+  });
+}
+Promise.all([loadScript("vendor/marked.min.js"), loadScript("vendor/purify.min.js")]).then(function () {
+  var STORE = "niro-coach-chat-v1";
+  var STARTERS = [
+    ["Prep me for a negotiation", "Build a one-page plan: walk-away point, first offer, concessions.", "Prep me for a negotiation. "],
+    ["They just countered", "Paste what they sent and I'll help you respond.", "The other side just came back with this: "],
+    ["Build three offers", "Package the issues into equal-value options to present together.", "Help me build three equal-value packages (MESOs) for this deal: "],
+    ["Debrief a negotiation", "What worked, what it cost you, one lesson to keep.", "Debrief a negotiation I just had: "]
+  ];
+
+  var log = document.getElementById("log");
+  var scroller = document.getElementById("scroller");
+  var form = document.getElementById("form");
+  var input = document.getElementById("input");
+  var sendBtn = document.getElementById("send");
+  var history = load();
+  var controller = null;
+
+  var API = BASE + "api/chat";
+
+  var rich = window.marked && window.DOMPurify;
+  if (rich) marked.setOptions({ gfm: true, breaks: false });
+  function esc(t) { var d = document.createElement("div"); d.textContent = t; return d.innerHTML; }
+  function md(text) {
+    return rich ? DOMPurify.sanitize(marked.parse(text)) : '<p style="white-space:pre-wrap">' + esc(text) + "</p>";
+  }
+
+  function load() {
+    try { var h = JSON.parse(localStorage.getItem(STORE) || "[]"); return Array.isArray(h) ? h : []; }
+    catch (e) { return []; }
+  }
+  function save() {
+    try { localStorage.setItem(STORE, JSON.stringify(history)); } catch (e) {}
+  }
+
+  function el(tag, cls, html) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (html != null) n.innerHTML = html;
+    return n;
+  }
+
+  function atBottom() { return scroller.scrollHeight - scroller.scrollTop - scroller.clientHeight < 80; }
+  function toBottom() { scroller.scrollTop = scroller.scrollHeight; }
+
+  function renderEmpty() {
+    var box = el("div", "empty");
+    box.appendChild(el("h2", null, "Prepare like it's a science."));
+    box.appendChild(el("p", null, "Tell me what you're negotiating, who's on the other side, and where it stands. I'll ask a couple of questions, then help you plan the first offer, the concessions and the words to use."));
+    var chips = el("div", "chips");
+    STARTERS.forEach(function (s) {
+      var b = el("button", "chip");
+      b.type = "button";
+      b.appendChild(el("b")).textContent = s[0];
+      b.appendChild(el("span")).textContent = s[1];
+      b.onclick = function () { input.value = s[2]; grow(); input.focus(); };
+      chips.appendChild(b);
+    });
+    box.appendChild(chips);
+    log.appendChild(box);
+  }
+
+  function addUser(text) {
+    var m = el("div", "msg user");
+    var b = el("div", "bubble");
+    b.textContent = text;
+    m.appendChild(b);
+    log.appendChild(m);
+  }
+
+  function addAssistant(text) {
+    var m = el("div", "msg assistant");
+    var b = el("div", "bubble", text ? md(text) : "");
+    m.appendChild(b);
+    if (text) m.appendChild(copyTools(function () { return text; }));
+    log.appendChild(m);
+    return { msg: m, bubble: b };
+  }
+
+  function copyTools(getText) {
+    var t = el("div", "tools");
+    var c = el("button");
+    c.type = "button";
+    c.textContent = "Copy";
+    c.onclick = function () {
+      var done = function () { c.textContent = "Copied"; setTimeout(function () { c.textContent = "Copy"; }, 1500); };
+      if (navigator.clipboard) navigator.clipboard.writeText(getText()).then(done, function () {});
+    };
+    t.appendChild(c);
+    return t;
+  }
+
+  function renderAll() {
+    log.innerHTML = "";
+    if (!history.length) return renderEmpty();
+    history.forEach(function (m) { m.role === "user" ? addUser(m.content) : addAssistant(m.content); });
+    toBottom();
+  }
+
+  function setBusy(busy) {
+    sendBtn.textContent = busy ? "Stop" : "Send";
+    sendBtn.disabled = false;
+    input.disabled = false;
+  }
+
+  function grow() {
+    input.style.height = "auto";
+    input.style.height = Math.min(input.scrollHeight, window.innerHeight * 0.4) + "px";
+  }
+
+  async function send(text) {
+    if (!history.length) log.innerHTML = "";
+    history.push({ role: "user", content: text });
+    save();
+    addUser(text);
+    var view = addAssistant("");
+    view.bubble.innerHTML = '<div class="thinking"><span class="dots"><span></span><span></span><span></span></span>Thinking</div>';
+    toBottom();
+
+    controller = new AbortController();
+    setBusy(true);
+    var reply = "", failed = null, note = null, discard = false;
+    try {
+      var res = await fetch(API, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: history }),
+        signal: controller.signal
+      });
+      if (!res.ok) {
+        var err = {};
+        try { err = await res.json(); } catch (e) {}
+        throw new Error(err.error || ("Request failed (" + res.status + ")"));
+      }
+      var reader = res.body.getReader(), dec = new TextDecoder(), buf = "";
+      while (true) {
+        var r = await reader.read();
+        if (r.done) break;
+        buf += dec.decode(r.value, { stream: true });
+        var parts = buf.split("\n\n");
+        buf = parts.pop();
+        for (var i = 0; i < parts.length; i++) {
+          var line = parts[i].trim();
+          if (line.indexOf("data:") !== 0) continue;
+          var ev = JSON.parse(line.slice(5));
+          if (ev.t) {
+            var stick = atBottom();
+            reply += ev.t;
+            view.bubble.innerHTML = md(reply);
+            if (stick) toBottom();
+          } else if (ev.error) {
+            failed = ev.error;
+            if (ev.discard) discard = true;
+          } else if (ev.note) {
+            note = ev.note;
+          }
+        }
+      }
+    } catch (e) {
+      failed = e.name === "AbortError" ? (reply ? null : "Stopped.") : (e.message || "Something went wrong.");
+    }
+    controller = null;
+    setBusy(false);
+    if (discard) reply = "";
+
+    if (reply) {
+      // Keep whatever arrived, even if stopped or cut off, so the chat can continue.
+      history.push({ role: "assistant", content: reply });
+      save();
+      view.msg.appendChild(copyTools(function () { return reply; }));
+      if (note) view.msg.appendChild(el("div", "note")).textContent = note;
+      if (failed) view.msg.appendChild(el("div", "error")).textContent = failed;
+    } else {
+      // Nothing came back: undo the user turn and put the text back in the box.
+      history.pop();
+      save();
+      view.bubble.innerHTML = "";
+      view.bubble.appendChild(el("div", "error")).textContent = failed || "No reply. Try again.";
+      log.removeChild(view.msg.previousSibling);
+      input.value = text;
+      grow();
+    }
+    input.focus();
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (controller) { controller.abort(); return; }
+    var text = input.value.trim();
+    if (!text) return;
+    input.value = "";
+    grow();
+    send(text);
+  });
+
+  input.addEventListener("keydown", function (e) {
+    if (e.key === "Enter" && !e.shiftKey && !e.isComposing && window.matchMedia("(hover: hover)").matches) {
+      e.preventDefault();
+      form.requestSubmit();
+    }
+  });
+  input.addEventListener("input", grow);
+
+  document.getElementById("reset").onclick = function () {
+    if (controller) controller.abort();
+    history = [];
+    save();
+    renderAll();
+    input.focus();
+  };
+
+  renderAll();
+});
+</script>
+</body>
+</html>

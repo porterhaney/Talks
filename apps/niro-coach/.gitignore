@@ -1,0 +1,7 @@
+node_modules/
+.deploy-stage/
+.wrangler/
+.venv/
+config.json
+server.log
+__pycache__/

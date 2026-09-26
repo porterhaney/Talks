@@ -1,0 +1,8 @@
+{
+  "name": "niro-coach",
+  "private": true,
+  "description": "Negotiation coach chatbot built on the niro-negotiation skill",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.128.0"
+  }
+}
