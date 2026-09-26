@@ -101,11 +101,41 @@ else
   echo "  funnel: off (tailnet only)"
 fi
 
+# 10. Hub tile. The hub (~/hub-live) finds /niro by itself from `tailscale serve status`;
+#     this just gives the tile a proper name. Guarded: any surprise leaves refresh.py alone.
+HUB="$HOME/hub-live/refresh.py"
+if [ -f "$HUB" ]; then
+  if "$APP/.venv/bin/python" - "$HUB" "$MOUNT" <<'PYEOF'
+import py_compile, re, shutil, sys
+path, mount = sys.argv[1], sys.argv[2]
+src = open(path).read()
+if re.search(r"""["']%s["']\s*:""" % re.escape(mount), src):
+    print("  hub: tile already named"); sys.exit(0)
+m = re.search(r"^NAME\s*=\s*\{", src, re.M)
+# Only edit if NAME is keyed by mount paths like "/weather".
+if not m or not re.search(r"""["']/[a-z][\w/-]*["']\s*:""", src[m.end():m.end() + 2000]):
+    print("  hub: NAME dict not recognised; tile will show with its default label"); sys.exit(1)
+backup = path + ".pre-niro"
+shutil.copy2(path, backup)
+open(path, "w").write(src[:m.end()] + '\n    "%s": "Niro Method",' % mount + src[m.end():])
+try:
+    py_compile.compile(path, doraise=True)
+except py_compile.PyCompileError:
+    shutil.copy2(backup, path); print("  hub: edit failed to compile; restored refresh.py"); sys.exit(1)
+print("  hub: tile named 'Niro Method' (backup at %s)" % backup)
+PYEOF
+  then
+    launchctl kickstart -k "gui/$(id -u)/com.porter.hub-refresh" 2>/dev/null || true
+  fi
+else
+  echo "  hub: ~/hub-live not found; skipping"
+fi
+
 HOST=$("$TS" status --json 2>/dev/null | "$APP/.venv/bin/python" -c 'import json,sys; print(json.load(sys.stdin)["Self"]["DNSName"].rstrip("."))' 2>/dev/null || echo "mac-mini.tailc59509.ts.net")
 say "Done. Open https://$HOST$MOUNT on any of your devices."
 echo "  Logs:    $APP/server.log (metadata only, never chat content)"
 echo "  Config:  $APP/config.json (model, effort, max_tokens; restart after edits:"
 echo "           launchctl kickstart -k gui/\$(id -u)/$LABEL )"
-echo "  Hub:     the tile appears automatically; to rename it, add \"$MOUNT\": \"Niro Method\" to NAME in ~/hub-live/refresh.py"
+echo "  Hub:     https://$HOST/ lists it under Private"
 exit 0
 __PAYLOAD__
