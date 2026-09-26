@@ -41,4 +41,4 @@ Researched 2026-09-26. Goal: see whether enough public material exists to build 
 
 - YPO Deal Network MasterClass: *High Performance Negotiation & Influence* ([ypodeal.negotiationforum.com](https://ypodeal.negotiationforum.com/)). 5 live sessions and 4 simulations. Covers principled preparation, putting numbers on complex deals, framing, and creating value across several issues.
 - LBS courses: MBA *Negotiations and Bargaining*; *Entrepreneurial Negotiations* (liquidity events); *Private Equity Negotiations* (with Florin Vasvari)
-- Already captured: Porter's LBS 2026 notes in the `ypo-lbs-2026` skill (`niro-sivanathan.md`, `niro-sivanathan-influence.md`, about 520 lines)
+- Already captured: Porter's LBS 2026 notes in the `ypo-lbs-2026` skill (`niro-sivanathan.md`, `niro-sivanathan-influence.md`)
