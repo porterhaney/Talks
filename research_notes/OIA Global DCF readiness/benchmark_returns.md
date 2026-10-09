@@ -225,11 +225,12 @@ Sources: [Yahoo IWM](https://finance.yahoo.com/quote/IWM/history/), [Yahoo ^RUT]
 For a **single equity check on August 31, 2011** with no interim cash flows, the net equity proceeds at an October–December 2026 exit must exceed these multiples of the original check:
 - about **8.4x** to beat the S&P 500 TR
 - about **6.9x** to beat Industrials
-- about **5.2x** to beat the MidCap 400, Expeditors or the CA-PE-like 12%
+- about **9.4x** to match the 15.71% net return of the Cambridge US PE index
+- about **5.2x** to beat the MidCap 400 or Expeditors
 - about **4.5–4.7x** to beat small caps and transports
 - about **3.2x** to clear an 8% hurdle
 
-If there were interim dividends or follow-on equity for add-ons, compare using **IRR on all dated cash flows** against a **PME** (each cash flow invested in the index).
+OIA has generated EBITDA throughout the hold and LDI has funded add-ons, so the correct test uses **every dated LDI↔OIA cash flow**: KS-PME > 1, or Direct Alpha > 0, against SPXTR. Exit hurdle = Σ Contrib_t·(I_exit/I_t) − Σ Dist_t·(I_exit/I_t). In the hypothetical example, $10M of equity with $1M/yr of dividends from 2012–2025 cuts the exit price needed to tie the S&P 500 from **$83.9M to $38.6M**.
 
 ### Cited Findings
 - The benchmark multiples to October 8, 2026 come from Q2 and Q3 above (Yahoo Finance via the MCP tool): S&P 500 TR 8.39x, XLI 6.88x, IJH 5.22x, EXPD 5.18x, IWM 4.70x, IYT 4.52x and CHRW 2.83x.
@@ -249,29 +250,92 @@ If there were interim dividends or follow-on equity for add-ons, compare using *
   - median at about 13.7% → about **7.1x**
   - Rates: CA 15.71% from [CA PDF](https://www.cambridgeassociates.com/wp-content/uploads/2026/02/WEB-2025-Q3-USPE-Benchmark-Book.pdf); 19.2% from [Dakota](https://www.dakota.com/resources/blog/top-quartile-private-equity-irr-benchmarks-by-vintage-year); 13.7% from [Buyouts Insider](https://www.buyoutsinsider.com/cortec-and-monomoy-lead-2011-vintage-all-star-funds/). The multiples are computed as (1+r)^15.34.
 - **The PME method** is what Cambridge uses: buy and sell index "shares" on the private fund's cash-flow dates, then compare. — [CA PDF methodology page](https://www.cambridgeassociates.com/wp-content/uploads/2026/02/WEB-2025-Q3-USPE-Benchmark-Book.pdf)
+- **Kaplan–Schoar PME (KS-PME)** is the ratio of index-compounded distributions plus ending value to index-compounded contributions. Kaplan & Schoar (2005) introduced it to compare net fund cash flows with the S&P 500. **Direct Alpha** (Gredil, Griffiths & Stucke, "Benchmarking Private Equity: The Direct Alpha Method," *Journal of Corporate Finance*) is the IRR of the same index-compounded cash flows. It is the *annualized* excess return over the index, and it equals 0 exactly when KS-PME = 1. — [CFA Institute Enterprising Investor: PME vs. Direct Alpha (2014)](https://rpc.cfainstitute.org/blogs/enterprising-investor/2014/evaluating-private-equity-performance-pme-vs-direct-alpha); [Altss glossary: Direct Alpha](https://altss.com/glossary/direct-alpha); [Altss glossary: KS-PME](https://altss.com/glossary/ks-pme); [Riscura: Improving the way we benchmark PE](https://riscura.com/insights/articles/improving-the-way-we-benchmark-private-equity-performance/)
+- **Freight forwarders' working capital swings with freight rates (EBITDA ≠ free cash flow).** Expeditors' operating cash flow was **$868M in 2021** and **$2,130M in 2022**. EXPD attributed the $1.26B improvement "primarily" to collecting accounts receivable. Receivables went from about $3.81B (end-2021) to about $2.11B (end-2022), with an AR change of −$1.87B in 2021 (cash outflow) and +$1.59B in 2022 (inflow). — [Expeditors FY2022 Form 10-K (SEC)](https://www.sec.gov/Archives/edgar/data/746515/000095017023005412/expd-20221231.htm); AR series via [MarketScreener EXPD cash flow](https://www.marketscreener.com/quote/stock/EXPEDITORS-INTERNATIONAL--4900/finances-cash-flow-statement/)
+- **SPXTR year-end levels used in the worked example below** (Yahoo ^SP500TR via MCP). Each level is followed by its growth multiple to the October 8, 2026 close of 17,419.63:
+
+  | Year-end | SPXTR level | Growth to 10/8/2026 |
+  |---|---|---|
+  | 2011 | 2,158.94 | 8.07x |
+  | 2012 | 2,504.44 | 6.96x |
+  | 2013 | 3,315.59 | 5.25x |
+  | 2014 | 3,769.44 | 4.62x |
+  | 2015 | 3,821.60 | 4.56x |
+  | 2016 | 4,278.66 | 4.07x |
+  | 2017 | 5,212.76 | 3.34x |
+  | 2018 | 4,984.22 | 3.50x |
+  | 2019 | 6,553.57 | 2.66x |
+  | 2020 | 7,759.35 | 2.25x |
+  | 2021 | 9,986.70 | 1.74x |
+  | 2022 | 8,178.02 | 2.13x |
+  | 2023 | 10,327.83 | 1.69x |
+  | 2024 | 12,911.82 | 1.35x |
+  | 2025 | 15,220.45 | 1.14x |
+
+  The August 31, 2011 level was 2,076.78, which grows 8.39x to the October 8, 2026 close. — [Yahoo ^SP500TR](https://finance.yahoo.com/quote/%5ESP500TR/history/)
 
 ### Inferences
 
-**How to build the real hurdle with interim cash flows.** This applies to dividends to LDI, management fees upstreamed, and follow-on equity for the roughly 11 add-ons.
+#### A. The apples-to-apples method: OIA generated cash every year, so count interim cash, not just the exit price
 
-1. **List every dated equity cash flow between LDI and OIA.**
-   - Contributions: the initial 2010/2011 equity, any equity funding for add-ons (2013 U.S. Worldwide Logistics, American Cargo Express, and the 2024–2026 deals), and any capital injections. Record these as negative.
-   - Distributions: dividends, recap dividends, and management or monitoring fees paid to LDI. Record these as positive.
-   - Exclude add-ons funded by OIA's own cash flow or by OIA-level debt. Those are already reflected in exit equity value and are not new LDI capital.
-2. **Actual deal IRR:** solve Σ CF_t / (1+IRR)^(t) + Exit Equity Proceeds / (1+IRR)^(T) = 0, for example with XIRR in Excel. Compare that IRR with the benchmark CAGRs above (15.1% S&P TR, about 10.8% Russell 2000, about 11.5% EXPD, and so on).
-3. **PME-based dollar hurdle.** This is the exact figure the 2026 price must clear.
-   - Hurdle exit proceeds = Σ Contributions_t × (I_exit / I_t) − Σ Distributions_t × (I_exit / I_t), where I is the total-return index level (for example SPXTR).
-   - Each contribution is grown at the index's actual return from its own date. Each distribution is credited as if it had been reinvested in the index.
-   - Kaplan–Schoar PME = [Σ Dist_t × (I_exit/I_t) + Exit proceeds] / [Σ Contrib_t × (I_exit/I_t)]. A PME above 1.0 means OIA beat the index.
-4. **Why the timing of add-on capital matters.**
-   - Capital invested in 2024–2026 has had little time to compound. A 2025 dollar needs only about 1.0–1.2x by exit to match the S&P 500, while the 2011 dollar needs about 8.4x.
-   - A simple "total proceeds ÷ total invested" multiple (MOIC) therefore **understates** performance against the index when much of the capital went in late. A single-date (1+r)^15 test **overstates** the hurdle.
-   - Conversely, dividends paid early count heavily. A $1 dividend in 2014 counts as roughly 5–6x at exit under a PME, because it is credited with S&P TR growth from 2014.
-   - The IRR-vs-CAGR comparison is only exact for a single in/out cash flow. With multiple flows, use PME (or mPME) as the authoritative test and IRR vs. the index's IRR on the same cash-flow schedule.
-5. **Apples to apples.**
-   - The hurdle applies to **net equity proceeds to LDI**: enterprise value minus net debt, transaction fees, escrows and holdbacks, and any minority or rollover holders' share. LDI took "majority control," so founder Yoshida and others may have retained a stake.
-   - Index returns are pre-tax. If the owners want an after-tax comparison, tax both sides consistently. Index dividends are taxed annually, while the private gain is taxed at exit.
-6. **Illustrative example, with hypothetical numbers.** Assume $10M of LDI equity on August 31, 2011 and no other flows. The 2026 equity proceeds must exceed about $84M to beat the S&P 500 TR (8.39x as of October 8, 2026), about $47M to beat the Russell 2000 TR (4.70x), about $52M to beat EXPD TR (5.18x), and about $32M to clear an 8% compounding hurdle (3.20x).
+**(1) Build LDI's equity cash-flow ledger, with every flow dated:**
+
+| Sign | Item | Notes |
+|---|---|---|
+| − | Initial equity check (2010/2011) | Equity only. Purchase price minus acquisition debt minus seller rollover. |
+| − | Each add-on acquisition **equity injection by LDI** | Only cash that came *from LDI* into OIA. |
+| − | Any other capital calls or rescue equity | |
+| + | Dividends and distributions paid up to LDI | |
+| + | Management, monitoring or board fees paid to LDI | Only if they are true economic returns to the owner, not payment for services LDI actually provides at cost. |
+| + | Tax distributions | Only if OIA is a pass-through and LDI's owners pay the tax. In that case, also deduct that tax on the other side for consistency. |
+| + | **Net exit proceeds to LDI** | Enterprise value − net debt (including debt from 2024–26 add-ons) − transaction costs − escrow/holdback (or its expected value) − minority/rollover holders' share ± working-capital true-up. |
+
+- **Debt paydown funded by OIA's cash flow is already in the net exit proceeds**, because lower net debt at exit means more equity. Do **not** add it again as a separate cash flow.
+- **Results:**
+  - **Deal IRR** = XIRR(ledger).
+  - **MOIC** = (Σ distributions + net exit proceeds) / Σ contributions.
+  - **KS-PME** = [Σ Dist_t·(I_exit/I_t) + Exit] / [Σ Contrib_t·(I_exit/I_t)], using I = SPXTR (or IWM/IYT for a risk-matched check).
+  - **Direct Alpha** = XIRR of the same flows, each multiplied by (I_exit/I_t).
+  - **Decision rule:** OIA beat the S&P 500 if and only if KS-PME > 1 (equivalently, Direct Alpha > 0).
+  - **The 2026 sale-price hurdle** is the exit proceeds that make KS-PME = 1:
+    **Exit_hurdle = Σ Contrib_t·(I_exit/I_t) − Σ Dist_t·(I_exit/I_t).**
+
+**(2) Avoid double counting.**
+- EBITDA that OIA kept and **reinvested** in the ~11 add-on acquisitions, in capex or in debt paydown is **not** a distribution. Its payoff shows up in the exit value: higher EBITDA times the multiple, or lower net debt. Count it once, at exit.
+- Only cash that actually crossed from OIA to LDI counts as an interim inflow. Only cash that crossed from LDI to OIA counts as an outflow.
+- Add-ons funded with OIA-level debt create no LDI cash flow. Their debt is subtracted at exit.
+
+**(3) EBITDA is not free cash flow (FCF).** Cash available to distribute is roughly EBITDA − cash taxes − capex (including software and warehouse fit-outs) − Δ working capital − interest − debt amortization − earn-outs and deferred consideration on add-ons.
+- For freight forwarders, **working capital swings hugely with freight rates**. When ocean and air rates spike, receivables (billed at the higher rates) balloon and consume cash; when rates fall, receivables are collected and release cash.
+- Expeditors shows the pattern: a $1.87B AR cash *outflow* in 2021, then a $1.59B *inflow* in 2022, with operating cash flow going from $868M to $2,130M.
+- OIA's 2021 EBITDA was likely flattered by rate spikes while its free cash flow was squeezed. This inference is based on the peer pattern; no OIA data was obtained.
+- A sale process will also normalize EBITDA and set a **normalized working-capital peg**, so the exit price should be measured on normalized, not peak, EBITDA.
+
+**(4) Worked example (hypothetical numbers, actual SPXTR levels).** LDI invests **$10.0M** of equity on August 31, 2011, and the exit closes October 8, 2026. Distributions are paid each December 31 from 2012 to 2025 (14 payments). These figures are computed from the SPXTR levels above.
+
+| Scenario | Interim distributions to LDI | Index-compounded value of distributions at exit | **Exit proceeds needed to tie the S&P 500 TR (KS-PME = 1)** | MOIC at that hurdle | IRR at that hurdle |
+|---|---|---|---|---|---|
+| A. No distributions | $0 | $0 | **$83.9M** (8.39x) | 8.39x | 15.1% |
+| B. $0.5M/yr (5% yield on cost) | $7.0M total | $22.6M | **$61.3M** | 6.83x | 15.1% |
+| C. $1.0M/yr (10% yield on cost) | $14.0M total | $45.3M | **$38.6M** | 5.26x | 15.2% |
+| D. As C, plus a **$5.0M LDI equity injection for add-ons on Dec 31, 2024** | $14.0M total | $45.3M; the injection grows to $6.75M | **$45.4M** | 3.96x on $15M | 15.2% |
+
+- **Interim distributions matter enormously.** An early dividend is credited with all the index growth after its payment date: a 2012 dollar counts as 6.96x by exit. With $1M/yr of dividends, the exit hurdle falls from $83.9M to $38.6M.
+- **The MOIC needed to tie the index falls when late money comes in.** The $5M added in December 2024 needs only 1.35x to keep pace, so the required MOIC in scenario D drops to 3.96x. Judge by PME or IRR, not raw MOIC.
+- **Sensitivity in scenario B:**
+  - An exit at $40M gives IRR 12.4%, KS-PME 0.75 (it lags the S&P), MOIC 4.7x.
+  - An exit at $60M gives IRR 15.0% and KS-PME 0.985 (just short).
+  - An exit at $84M gives IRR 17.3% and KS-PME 1.27.
+- **Sensitivity in scenario C:** an exit at $60M gives IRR 17.6%, KS-PME 1.26 and Direct Alpha of about +2.1%/yr over the S&P 500 TR.
+- **Against the risk-matched benchmarks** (Russell 2000 TR / IYT, about 4.5–4.7x for the 2011 dollar), the same method gives far lower hurdles. In scenario A, for example, $47M would tie IWM.
+
+#### B. Additional mechanics
+
+- **Timing of add-on capital.** A dollar LDI put in at end-2024 needs only 1.35x by October 2026 to match the S&P 500 TR, and an end-2025 dollar needs 1.14x. The August 2011 dollar needs 8.39x. A blended "total proceeds ÷ total invested" MOIC therefore makes late-funded add-ons look worse against the index than they are, and a single-date (1+r)^15 test overstates the hurdle on late money. In the other direction, an end-2014 dividend counts as 4.62x at exit under a PME.
+- **IRR vs. index CAGR** is an exact comparison only for one cash flow in and one out. With multiple flows, use KS-PME or Direct Alpha (or CA's mPME) as the authoritative test. An equivalent test is the deal IRR against the IRR of the "index-replica" cash flows.
+- **Net equity basis.** The hurdle applies to **net equity proceeds to LDI**. LDI took "majority control," so founder Yoshida and others may have retained a stake, and only LDI's share counts.
+- **Taxes.** Index returns are pre-tax. For an after-tax comparison, tax both sides consistently: index dividends are taxed annually, while the private gain is taxed at exit.
+- **Single-check hurdles** for $10M on August 31, 2011 with no other flows, to October 8, 2026: about **$84M** for the S&P 500 TR (8.39x), **$69M** for XLI (6.88x), **$52M** for EXPD TR (5.18x) or the MidCap 400 TR (5.22x), **$47M** for the Russell 2000 TR (4.70x), **$45M** for IYT (4.52x), and **$32M** for an 8% compounding hurdle (3.20x).
 
 ### Gaps
 - LDI's actual equity amounts, add-on funding sources and dividend history are not public. The dollar hurdle cannot be computed until the owners supply the cash-flow ledger.
